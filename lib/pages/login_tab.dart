@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  LoginPage({Key key, this.title}) : super(key: key);
+class LoginTab extends StatefulWidget {
+  LoginTab({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginTabState createState() => _LoginTabState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginTabState extends State<LoginTab> {
   @override
   Widget build(BuildContext context) {
     return Column(
