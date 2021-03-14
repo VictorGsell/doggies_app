@@ -27,7 +27,7 @@ class LoginService {
           .login(Credentials(email: email, password: password));
     } catch (error) {
       printDioErrorDetails(error);
-      throw error;
+      rethrow;
     }
   }
 
