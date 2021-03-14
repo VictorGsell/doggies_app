@@ -18,12 +18,14 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.0.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
+  retrofit: any
+  dio: any
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -33,6 +35,11 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  # Packages recommended on the pub.dev retrofit page to work with retrofit.
+  retrofit_generator: any
+  build_runner: any
+  json_annotation: ^3.1.1
+  json_serializable: ^3.5.1
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
