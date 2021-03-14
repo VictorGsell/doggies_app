@@ -22,6 +22,37 @@ Map<String, dynamic> _$GetAllBreedsResponseToJson(
       'status': instance.status,
     };
 
+GetBreedInfoResponse _$GetBreedInfoResponseFromJson(Map<String, dynamic> json) {
+  return GetBreedInfoResponse(
+    message: (json['message'] as Map<String, dynamic>)?.map(
+      (k, e) => MapEntry(k, e as String),
+    ),
+    status: json['status'] as String,
+  );
+}
+
+Map<String, dynamic> _$GetBreedInfoResponseToJson(
+        GetBreedInfoResponse instance) =>
+    <String, dynamic>{
+      'message': instance.message,
+      'status': instance.status,
+    };
+
+GetBreedImageResponse _$GetBreedImageResponseFromJson(
+    Map<String, dynamic> json) {
+  return GetBreedImageResponse(
+    message: json['message'] as String,
+    status: json['status'] as String,
+  );
+}
+
+Map<String, dynamic> _$GetBreedImageResponseToJson(
+        GetBreedImageResponse instance) =>
+    <String, dynamic>{
+      'message': instance.message,
+      'status': instance.status,
+    };
+
 // **************************************************************************
 // RetrofitGenerator
 // **************************************************************************
@@ -50,6 +81,83 @@ class _DogApi implements DogApi {
             baseUrl: baseUrl),
         data: _data);
     final value = GetAllBreedsResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<GetBreedInfoResponse> getBreedInfo(breed) async {
+    ArgumentError.checkNotNull(breed, 'breed');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>('breed/$breed',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = GetBreedInfoResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<GetBreedInfoResponse> getSubBreedInfo(breed, subBreed) async {
+    ArgumentError.checkNotNull(breed, 'breed');
+    ArgumentError.checkNotNull(subBreed, 'subBreed');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'breed/$breed/$subBreed',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = GetBreedInfoResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<GetBreedImageResponse> getRandomBreedImage(breed) async {
+    ArgumentError.checkNotNull(breed, 'breed');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'breed/$breed/images/random',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = GetBreedImageResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<GetBreedImageResponse> getRandomSubBreedImage(breed, subBreed) async {
+    ArgumentError.checkNotNull(breed, 'breed');
+    ArgumentError.checkNotNull(subBreed, 'subBreed');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'breed/$breed/$subBreed/images/random',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = GetBreedImageResponse.fromJson(_result.data);
     return value;
   }
 }

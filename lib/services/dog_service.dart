@@ -28,6 +28,46 @@ class DogService {
     }
   }
 
+  Future<Map<String, String>> getBreedInfo({String breed}) async {
+    try {
+      GetBreedInfoResponse response = await this._api.getBreedInfo(breed);
+      return response.message;
+    } catch (error) {
+      printDioErrorDetails(error);
+      rethrow;
+    }
+  }
+
+  Future<Map<String, String>> getSubBreedInfo({String breed, String subBreed}) async {
+    try {
+      GetBreedInfoResponse response = await this._api.getSubBreedInfo(breed, subBreed);
+      return response.message;
+    } catch (error) {
+      printDioErrorDetails(error);
+      rethrow;
+    }
+  }
+
+  Future<String> getRandomBreedImage({String breed, String subBreed}) async {
+    try {
+      GetBreedImageResponse response = await this._api.getRandomBreedImage(breed);
+      return response.message;
+    } catch (error) {
+      printDioErrorDetails(error);
+      rethrow;
+    }
+  }
+
+  Future<String> getRandomSubBreedImage({String breed, String subBreed}) async {
+    try {
+      GetBreedImageResponse response = await this._api.getRandomSubBreedImage(breed, subBreed);
+      return response.message;
+    } catch (error) {
+      printDioErrorDetails(error);
+      rethrow;
+    }
+  }
+
   // display method for debugging
   void printDioErrorDetails(DioError error) {
     print("error message: " + error.message);
