@@ -17,38 +17,45 @@ class _LoginTabState extends State<LoginTab> {
 
   @override
   Widget build(BuildContext context) {
+    var deviceData = MediaQuery.of(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         Center(
           child: SizedBox(
-              width: MediaQuery.of(context).size.width / 1.5,
+              width: deviceData.size.width / 1.5,
               child: TextField(
                 maxLines: 1,
                 maxLength: 50,
                 readOnly: true,
                 controller: _emailController,
                 decoration: InputDecoration(
-                  icon: Icon(Icons.mail_outline_rounded),
-                  labelText: "email"
-                ),
+                    border: OutlineInputBorder(),
+                    icon: Icon(Icons.mail_outline_rounded), labelText: "email"),
               )),
         ),
         Center(
           child: SizedBox(
-              width: MediaQuery.of(context).size.width / 1.5,
+              width: deviceData.size.width / 1.5,
               child: TextField(
                 maxLines: 1,
                 maxLength: 50,
                 readOnly: true,
                 controller: _pswController,
                 decoration: InputDecoration(
+                  border: OutlineInputBorder(),
                   icon: Icon(Icons.lock_outline_rounded),
                   labelText: "password",
                 ),
               )),
         ),
-        Center(child: ElevatedButton(onPressed: () {}, child: Text("Login")))
+        Center(
+            child: SizedBox(
+              child: ElevatedButton(onPressed: () {}, child: Text("Login", style: TextStyle(fontSize: 20),)),
+              width: 110,
+              height: 50,
+            )
+        )
       ],
     );
   }

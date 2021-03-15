@@ -149,7 +149,16 @@ class DogsTabState extends State<DogsTab> {
           if (snapshot.hasError)
             return Center(child: Text("An error occurred."));
           else if (!snapshot.hasData)
-            return Center(child: CircularProgressIndicator());
+            return Center(
+                child: SizedBox(
+                  child: CircularProgressIndicator(
+                  strokeWidth: 5,
+                  backgroundColor: Colors.transparent,
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.brown),
+                ),
+                width: 70,
+                height: 70,
+            ));
           else
             return ListView.separated(
               itemCount: (snapshot.data as List<DogModel>).length,
@@ -188,13 +197,13 @@ class DogsTabState extends State<DogsTab> {
         transitionDuration: Duration(milliseconds: 300),
         transitionBuilder: (_, anim, __, child) {
           return SlideTransition(
-            position: Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim),
+            position:
+                Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim),
             child: child,
           );
         },
         pageBuilder: (context, _, __) {
           return detailsModal;
-        }
-    );
+        });
   }
 }

@@ -17,7 +17,8 @@ class DoggiesApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'DoggiesApp',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.brown,
+        buttonColor: Colors.brown,
       ),
       home: HomePage(),
     );

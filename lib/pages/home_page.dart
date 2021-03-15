@@ -23,13 +23,19 @@ class HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Center(child: Text('$_title')),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: onTabSelected,
-        currentIndex: _currentIndex,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.login), label: 'login'),
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'dogs')
-        ],
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+            primaryColor: Colors.white,
+        ),
+        child: BottomNavigationBar(
+          onTap: onTabSelected,
+          backgroundColor: Colors.brown,
+          currentIndex: _currentIndex,
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.login), label: 'login'),
+            BottomNavigationBarItem(icon: Icon(Icons.list), label: 'dogs')
+          ],
+        ),
       ),
       body: _children[_currentIndex],
     );
