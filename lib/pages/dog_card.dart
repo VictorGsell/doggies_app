@@ -15,28 +15,78 @@ class DogCard extends StatelessWidget {
       height: deviceData.size.height / 1.4,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(
-              flex: 2,
+          Flexible(
+              flex: 1,
+              fit: FlexFit.tight,
               child: ClipRRect(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20.0),
+                    topRight: Radius.circular(20.0)),
                 child: FittedBox(
                   fit: BoxFit.fill,
                   child: Image.network(data.image),
                 ),
               )),
-          Expanded(
+          Flexible(
               flex: 1,
-              child: Text('${data.subBreed}')
-          ),
-          Expanded(
-              flex: 1,
-              child: Text('${data.breed}')
-          ),
-          Expanded(
-              flex: 1,
-              child: Text('${data.description}')
-          ),
+              fit: FlexFit.tight,
+              child: Column(
+                children: [
+                  Flexible(
+                      flex: 1,
+                      fit: FlexFit.loose,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10.0, right: 8.0),
+                              child: Text('Breed:',
+                                  style: TextStyle(fontWeight: FontWeight.bold)),
+                            ),
+                            Expanded(child: Text('${data.breed}', overflow: TextOverflow.ellipsis, maxLines: 1, softWrap: false)),
+                          ],
+                        ),
+                      )),
+                  Divider(),
+                  Flexible(
+                      flex: 1,
+                      fit: FlexFit.loose,
+                      child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10.0, right: 8.0),
+                              child: Text('Sub-breed:',
+                                  style:
+                                  TextStyle(fontWeight: FontWeight.bold)),
+                            ),
+                            Expanded(child: Text('${data.subBreed}', overflow: TextOverflow.ellipsis, maxLines: 1, softWrap: false)),
+                          ],
+                        ),
+                      ),
+                  Divider(),
+                  Flexible(
+                    flex: 1,
+                    fit: FlexFit.loose,
+                    child: Text('Informations:',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                  ),
+                  Flexible(
+                      flex: 8,
+                      fit: FlexFit.loose,
+                      child: SingleChildScrollView(
+                        child: Padding(
+                                padding: const EdgeInsets.only(top: 8.0, left: 10.0, right: 10.0),
+                                child: Text('${data.description}'),
+                              ),
+                      )),
+                ],
+              ))
         ],
       ),
     );

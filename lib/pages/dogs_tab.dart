@@ -160,8 +160,8 @@ class DogsTabState extends State<DogsTab> {
                 DogModel data = (snapshot.data as List<DogModel>)[index];
                 return ListTile(
                   dense: false,
-                  title: Text('${data.subBreed}'),
-                  subtitle: Text('${data.breed}'),
+                  title: Text('${data.breed}'),
+                  subtitle: Text('${data.subBreed}'),
                   trailing: Image.network('${data.image}'),
                   onTap: () => openDetailsModal(data),
                 );
