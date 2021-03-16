@@ -11,7 +11,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   int _currentIndex = 0;
-  String _title = 'DoggiesApp';
+  final String _title = 'DOGGIES';
   final List<Widget> _children = [
     LoginTab(),
     DogsTab()
@@ -21,15 +21,36 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text('$_title')),
+        title: Center(child:
+        Text('$_title',
+          style: TextStyle(
+            shadows: [
+              Shadow(
+                color: Colors.white,
+                offset: Offset(0, -5)
+              )
+            ],
+            color: Colors.transparent,
+            decoration: TextDecoration.underline,
+            decorationColor: Colors.white,
+            decorationThickness: 2.5,
+          ),
+        )
+        ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: onTabSelected,
-        currentIndex: _currentIndex,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.login), label: 'login'),
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'dogs')
-        ],
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+            primaryColor: Colors.white,
+        ),
+        child: BottomNavigationBar(
+          onTap: onTabSelected,
+          backgroundColor: Colors.brown,
+          currentIndex: _currentIndex,
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.login), label: 'login'),
+            BottomNavigationBarItem(icon: Icon(Icons.list), label: 'dogs')
+          ],
+        ),
       ),
       body: _children[_currentIndex],
     );
