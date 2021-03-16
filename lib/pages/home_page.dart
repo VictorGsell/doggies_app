@@ -1,3 +1,5 @@
+import 'package:doggies_app/BLoC/bloc_provider.dart';
+import 'package:doggies_app/BLoC/login_bloc.dart';
 import 'package:doggies_app/pages/dogs_tab.dart';
 import 'package:doggies_app/pages/login_tab.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +14,15 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   final String _title = 'DOGGIES';
-  final List<Widget> _children = [
-    LoginTab(),
-    DogsTab()
-  ];
+  final loginBloc = LoginBloc();
+  List<Widget> _children;
+
+  HomePageState() {
+    _children = [
+      BlocProvider<LoginBloc>(bloc: loginBloc, child: LoginTab()),
+      DogsTab()
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
