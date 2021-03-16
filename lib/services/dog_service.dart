@@ -75,7 +75,7 @@ class DogService {
     print("baseUrl : " + error.request.baseUrl);
     print("path : " + error.request.path);
     print("endpoint : " + error.request.uri.toString());
-    print("content-type : " + error.request.contentType);
+    print("content-type : " + error.request.contentType.toString());
     print("data : " + error.request.data.toString());
     print("response-type : " + error.request.responseType.toString());
   }
