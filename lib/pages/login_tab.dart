@@ -1,4 +1,5 @@
 import 'package:doggies_app/BLoC/bloc_provider.dart';
+import 'package:doggies_app/BLoC/events/login_event.dart';
 import 'package:doggies_app/BLoC/login_bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -21,9 +22,11 @@ class _LoginTabState extends State<LoginTab> {
 
   @override
   void initState() {
-    BlocProvider.of<LoginBloc>(context).loginStream.listen(onSuccessLogin, onError: onErrorLogin);
+    BlocProvider.of<LoginBloc>(context).loginResultStream.listen(onSuccessLogin, onError: onErrorLogin);
     super.initState();
   }
+
+
 
   @override
   void dispose() {
@@ -54,9 +57,8 @@ class _LoginTabState extends State<LoginTab> {
   }
 
   void onLoginButtonPressed() {
-    BlocProvider.of<LoginBloc>(context).doLogin(
-        email: _emailController.value.text,
-        password: _pswController.value.text);
+    var event = LoginEvent(email: _emailController.value.text, password: _pswController.value.text);
+    BlocProvider.of<LoginBloc>(context).loginEventSink.add(event);
     setState(() {
       _showLoader = true;
       _isDisabled = true;

@@ -1,8 +1,6 @@
 import 'package:doggies_app/services/api/login_api.dart';
 import 'package:dio/dio.dart';
 
-final LoginService loginService = LoginService();
-
 // Login service using singleton pattern
 class LoginService {
   static final LoginService _instance = LoginService._internal();
