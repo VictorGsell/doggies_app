@@ -30,21 +30,9 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Image.asset("assets/paw_logo.png", color: Colors.white),
         title: Center(child:
-        Text('$_title',
-          style: TextStyle(
-            shadows: [
-              Shadow(
-                color: Colors.white,
-                offset: Offset(0, -5)
-              )
-            ],
-            color: Colors.transparent,
-            decoration: TextDecoration.underline,
-            decorationColor: Colors.white,
-            decorationThickness: 2.5,
-          ),
-        )
+        Text('$_title', style: Theme.of(context).textTheme.headline2),
         ),
       ),
       bottomNavigationBar: Theme(
@@ -55,6 +43,11 @@ class HomePageState extends State<HomePage> {
           onTap: onTabSelected,
           backgroundColor: Colors.brown,
           currentIndex: _currentIndex,
+          selectedFontSize: 20,
+          unselectedFontSize: 15,
+          unselectedLabelStyle: TextStyle(fontStyle: FontStyle.normal, fontWeight: FontWeight.bold),
+          selectedLabelStyle: TextStyle(fontStyle: FontStyle.normal, fontWeight: FontWeight.bold),
+          iconSize: 35,
           items: [
             BottomNavigationBarItem(icon: Icon(Icons.login), label: 'login'),
             BottomNavigationBarItem(icon: Icon(Icons.list), label: 'dogs')

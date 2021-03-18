@@ -27,6 +27,11 @@ class DogService {
     this._api = DogApi(_dio);
   }
 
+  void initProgress() {
+    if (_progressController.isClosed)
+      _progressController = StreamController<double>();
+  }
+
   void disposeProgress() {
     if (!_progressController.isClosed)
       _progressController.close();

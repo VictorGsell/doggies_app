@@ -44,12 +44,11 @@ class DogCard extends StatelessWidget {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(left: 40.0, right: 8.0),
-                                child: Text('Breed:',
-                                    style: TextStyle(fontWeight: FontWeight.bold)),
+                                child: Text('Breed:', style: Theme.of(context).textTheme.bodyText1),
                               ),
                               Expanded(child: Padding(
                                 padding: const EdgeInsets.only(right: 40.0),
-                                child: Text('${data.breed}', overflow: TextOverflow.ellipsis, maxLines: 1, softWrap: false),
+                                child: Text('${data.breed}', style: Theme.of(context).textTheme.bodyText2, overflow: TextOverflow.ellipsis, maxLines: 1, softWrap: false),
                               )),
                             ],
                           ),
@@ -65,12 +64,11 @@ class DogCard extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 40.0, right: 8.0),
                             child: Text('Sub-breed:',
-                                style:
-                                TextStyle(fontWeight: FontWeight.bold)),
+                                style: Theme.of(context).textTheme.bodyText1),
                           ),
                           Expanded(child: Padding(
                             padding: const EdgeInsets.only(right: 40.0),
-                            child: Text('${data.subBreed}', overflow: TextOverflow.ellipsis, maxLines: 1, softWrap: false),
+                            child: Text('${data.subBreed}', style: Theme.of(context).textTheme.bodyText2, overflow: TextOverflow.ellipsis, maxLines: 1, softWrap: false),
                           )),
                         ],
                       ),
@@ -79,8 +77,7 @@ class DogCard extends StatelessWidget {
                     Flexible(
                       flex: 1,
                       fit: FlexFit.loose,
-                      child: Text('Informations:',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      child: Text('Informations:', style: Theme.of(context).textTheme.bodyText1),
                     ),
                     Flexible(
                         flex: 8,
@@ -88,7 +85,7 @@ class DogCard extends StatelessWidget {
                         child: SingleChildScrollView(
                           child: Padding(
                             padding: const EdgeInsets.only(top: 8.0, left: 10.0, right: 10.0),
-                            child: Text('${data.description}'),
+                            child: Text('${data.description}', style: Theme.of(context).textTheme.bodyText2),
                           ),
                         )),
                   ],

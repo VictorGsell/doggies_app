@@ -19,60 +19,118 @@ class DogsTab extends StatefulWidget {
 
 class DogsTabState extends State<DogsTab> {
   DogBloc _bloc;
+  double _progress;
+  bool _showProgress = false;
 
   @override
   void initState() {
-    _bloc =  BlocProvider.of<DogBloc>(context);
+    _bloc = BlocProvider.of<DogBloc>(context);
     _bloc.refreshEventSink.add(RefreshEvent());
+    _bloc.progressStream.listen((progress) {
+      setState(() {
+        _progress = progress;
+      });
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var _context = context;
     return StreamBuilder(
         stream: _bloc.dogsStream,
         builder: (context, snapshot) {
-          if (snapshot.hasError)
-            return Center(child: Text("An error occurred."));
-          else if (!snapshot.hasData)
+          if (snapshot.hasError) {
             return Center(
-                child: SizedBox(
-                  child: CircularProgressIndicator(
-                  strokeWidth: 5,
-                  backgroundColor: Colors.transparent,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.brown),
-                ),
-                width: 70,
-                height: 70,
-            ));
-          else
-            return RefreshIndicator(
-              onRefresh: _bloc.fetchDogs,
-              child: ListView.separated(
-                itemCount: (snapshot.data as List<DogModel>).length,
-                separatorBuilder: (BuildContext context, int index) {
-                  return Divider();
-                },
-                itemBuilder: (context, index) {
-                  DogModel data = (snapshot.data as List<DogModel>)[index];
-                  FadeInImage image = FadeInImage(
-                    width: 75,
-                    height: 60,
-                    fit: BoxFit.fill,
-                    placeholder: AssetImage("assets/image_placeholder.jpg"),
-                    image: NetworkImage(data.image),
-                  );
-                  return ListTile(
-                    dense: false,
-                    title: Text('${data.breed}'),
-                    subtitle: Text('${data.subBreed}'),
-                    trailing: image,
-                    onTap: () => openDetailsModal(data: data, image: image),
-                  );
-                },
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text("An error occurred."),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 15.0, top: 15.0),
+                    child: SizedBox(
+                      width: 110,
+                      height: 50,
+                      child: ElevatedButton(
+                          onPressed: _refetch, child: Text("Retry")),
+                    ),
+                  ),
+                  _showProgress
+                      ? SizedBox(
+                          child: CircularProgressIndicator(
+                              backgroundColor: Colors.transparent,
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.brown),
+                              value: _progress),
+                          width: 50,
+                          height: 50)
+                      : SizedBox(width: 50, height: 50)
+                ],
               ),
             );
+          } else if (!snapshot.hasData)
+            return Center(
+                child: SizedBox(
+              child: CircularProgressIndicator(
+                value: _progress,
+                strokeWidth: 5,
+              ),
+              width: 70,
+              height: 70,
+            ));
+          else
+            return Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                _showProgress
+                    ? Positioned(
+                        child: SizedBox(
+                            child: CircularProgressIndicator(value: _progress),
+                            width: 50,
+                            height: 50),
+                        top: 39,
+                      )
+                    : SizedBox(width: 0, height: 0),
+                RefreshIndicator(
+                  onRefresh: _refetch,
+                  child: ListView.separated(
+                    itemCount: (snapshot.data as List<DogModel>).length,
+                    separatorBuilder: (BuildContext context, int index) {
+                      return Divider();
+                    },
+                    itemBuilder: (context, index) {
+                      DogModel data = (snapshot.data as List<DogModel>)[index];
+                      FadeInImage image = FadeInImage(
+                        width: 75,
+                        height: 60,
+                        fit: BoxFit.fill,
+                        placeholder: AssetImage("assets/image_placeholder.jpg"),
+                        image: NetworkImage(data.image),
+                      );
+                      return ListTile(
+                        dense: false,
+                        title: Text('${data.breed}'),
+                        subtitle: Text('${data.subBreed}'),
+                        trailing: image,
+                        onTap: () => openDetailsModal(data: data, image: image),
+                      );
+                    },
+                  ),
+                )
+              ],
+            );
         });
+  }
+
+  Future<void> _refetch() async {
+    setState(() {
+      _progress = 0;
+      _showProgress = true;
+    });
+    await _bloc.fetchDogs();
+    setState(() {
+      _showProgress = false;
+    });
   }
 
   void openDetailsModal({DogModel data, FadeInImage image}) {

@@ -112,7 +112,6 @@ class _LoginTabState extends State<LoginTab> {
               onPressed: _isDisabled ? null : onLoginButtonPressed,
               child: Text(
                 "Login",
-                style: TextStyle(fontSize: 20),
               )),
           width: 110,
           height: 50,

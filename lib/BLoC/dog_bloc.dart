@@ -44,6 +44,7 @@ class DogBloc implements Bloc {
       _refreshEventController = StreamController<RefreshEvent>();
       _refreshEventController.stream.listen(refresh);
     }
+    _service.initProgress();
   }
 
   @override

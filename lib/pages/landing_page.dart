@@ -12,6 +12,7 @@ class LandingPage extends StatefulWidget {
 class LandingPageState extends State<LandingPage> {
   DogBloc _bloc;
   double _progress = 0;
+  String _title = "DOGGIES";
 
   @override
   void initState() {
@@ -20,17 +21,10 @@ class LandingPageState extends State<LandingPage> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-
-    super.dispose();
-  }
-
   void _loadApp() {
     _bloc.dogsStream.listen(
         (_) => Navigator.of(context).pushNamedAndRemoveUntil(
             "/home", (route) => false), onError: (error) {
-          _progress = 0;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("A Network error occurred, retrying in 5s..."),
@@ -52,33 +46,46 @@ class LandingPageState extends State<LandingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.brown,
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text("Gathering Dogs...",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                    color: Colors.white)),
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-              child: SizedBox(
-                child: LinearProgressIndicator(
-                  value: _progress,
-                  backgroundColor: Colors.black45,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                ),
-                width: 250,
-                height: 10,
+      body: Column(
+        children: [
+          Expanded(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset("assets/paw_logo.png", width: 200, height: 200, color: Colors.white),
+                  Text('$_title', style: Theme.of(context).textTheme.headline1)
+                ],
               ),
             ),
-            CircularProgressIndicator(
-              backgroundColor: Colors.brown,
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+          ),
+          Expanded(
+            child: Center(
+              child: Column(
+                children: [
+                  Text("Gathering Dogs...",
+                      style: Theme.of(context).textTheme.subtitle2),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+                    child: SizedBox(
+                      child: LinearProgressIndicator(
+                        value: _progress,
+                        backgroundColor: Colors.black45,
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                      width: 250,
+                      height: 10,
+                    ),
+                  ),
+                  CircularProgressIndicator(
+                    backgroundColor: Colors.brown,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
