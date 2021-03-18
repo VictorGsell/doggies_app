@@ -1,6 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:doggies_app/BLoC/dog_bloc.dart';
 import 'package:doggies_app/pages/home_page.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:doggies_app/pages/landing_page.dart';
+import 'package:doggies_app/BLoC/bloc_provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +23,10 @@ class DoggiesApp extends StatelessWidget {
         primarySwatch: Colors.brown,
         buttonColor: Colors.brown,
       ),
-      home: HomePage(),
+      routes: {
+        "/home": (BuildContext context) => HomePage(),
+      },
+      home: BlocProvider<DogBloc>(child: LandingPage(), bloc: DogBloc()),
     );
   }
 }
