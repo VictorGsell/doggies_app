@@ -54,33 +54,40 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
   assets:
     - assets/image_placeholder.jpg
-  #   - images/a_dot_ham.jpeg
+    - assets/paw_logo.png
 
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware.
+  fonts:
+    - family: Orkney
+      fonts:
+        - asset: assets/fonts/Orkney/Orkney-Regular.ttf
+        - asset: assets/fonts/Orkney/Orkney-Regular-Italic.ttf
+          style: italic
+        - asset: assets/fonts/Orkney/Orkney-Light.ttf
+          weight: 100
+        - asset: assets/fonts/Orkney/Orkney-Light-Italic.ttf
+          weight: 100
+          style: italic
+        - asset: assets/fonts/Orkney/Orkney-Medium.ttf
+          weight: 400
+        - asset: assets/fonts/Orkney/Orkney-Medium-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/Orkney/Orkney-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Orkney/Orkney-Bold-Italic.ttf
+          weight: 700
+          style: italic
 
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
+    - family: Baloo
+      fonts:
+        - asset: assets/fonts/baloo/Baloo-Regular.ttf
 
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+    - family: Lobster
+      fonts:
+        - asset: assets/fonts/Lobster/Lobster_1.3.otf
+
+    - family: Pacifico
+      fonts:
+        - asset: assets/fonts/pacifico/Pacifico.ttf
