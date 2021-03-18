@@ -23,6 +23,7 @@ abstract class DogApi {
 class GetAllBreedsResponse {
   Map<String, List<String>> message;
   String status;
+  int code;
   GetAllBreedsResponse({this.message, this.status});
   factory GetAllBreedsResponse.fromJson(Map<String, dynamic> json) => _$GetAllBreedsResponseFromJson(json);
   Map<String, dynamic> toJson() => _$GetAllBreedsResponseToJson(this);
@@ -32,6 +33,7 @@ class GetAllBreedsResponse {
 class GetBreedInfoResponse {
   Map<String, String> message;
   String status;
+  int code;
   GetBreedInfoResponse({this.message, this.status});
   factory GetBreedInfoResponse.fromJson(Map<String, dynamic> json) => _$GetBreedInfoResponseFromJson(json);
   Map<String, dynamic> toJson() => _$GetBreedInfoResponseToJson(this);
@@ -41,6 +43,7 @@ class GetBreedInfoResponse {
 class GetBreedImageResponse {
   String message;
   String status;
+  int code;
   GetBreedImageResponse({this.message, this.status});
   factory GetBreedImageResponse.fromJson(Map<String, dynamic> json) => _$GetBreedImageResponseFromJson(json);
   Map<String, dynamic> toJson() => _$GetBreedImageResponseToJson(this);
