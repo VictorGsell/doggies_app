@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:doggies_app/models/dog_model.dart';
 import 'package:doggies_app/services/api/dog_api.dart';
 import 'package:dio/dio.dart';
@@ -6,12 +8,15 @@ import 'package:dio/dio.dart';
 class DogService {
   static final DogService _instance = DogService._internal();
   final Dio _dio = Dio();
+  StreamController<double> _progressController = StreamController<double>();
   DogApi _api;
   bool isLoaded = false;
-
+  double _progress = 0;
   List<DogModel> _data;
 
   List<DogModel> get dogs => List<DogModel>.from(_data);
+  Stream<double> get progressStream => _progressController.stream;
+  bool get isProgressStreamClosed => _progressController.isClosed;
 
   factory DogService() {
     return _instance;
@@ -20,7 +25,11 @@ class DogService {
   DogService._internal() {
     this._dio.options.headers = {"content-type": "application/json"};
     this._api = DogApi(_dio);
-    fetch();
+  }
+
+  void disposeProgress() {
+    if (!_progressController.isClosed)
+      _progressController.close();
   }
 
   Future<void> fetch() async {
@@ -29,6 +38,8 @@ class DogService {
       Map<String, List<String>> allBreeds = await _getAllBreeds();
       var breeds = allBreeds.keys.toList();
       for (int i = 0; i < breeds.length; i++) {
+        _progress = i / breeds.length;
+        _progressController.sink.add(_progress);
         var breedModel = await breedToModel(breed: breeds[i]);
         newDogs.add(breedModel);
         if (allBreeds[breeds[i]].length > 0)
@@ -54,7 +65,7 @@ class DogService {
       return DogModel(breed: breed, subBreed: "none", image: image, description: info);
     } catch (error) {
       DioError err = error as DioError;
-      if (err.response.statusCode == 404)
+      if (err != null && err.response != null && err.response.statusCode == 404)
         return DogModel(breed: breed, subBreed: "none", image: image, description: info);
       else
         rethrow;
@@ -70,7 +81,7 @@ class DogService {
       return DogModel(breed: breed, subBreed: subBreed, image: image, description: info);
     } catch (error) {
       DioError err = error as DioError;
-      if (err.response.statusCode == 404)
+      if (err != null && err.response != null && err.response.statusCode == 404)
         return DogModel(breed: breed, subBreed: subBreed, image: image, description: info);
       else
         rethrow;

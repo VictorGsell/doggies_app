@@ -12,11 +12,12 @@ class DogBloc implements Bloc {
   DogBloc() {
     _refreshEventController.stream.listen(refresh);
     refresh(null);
-    fetchDogs();
   }
 
   Stream<List<DogModel>> get dogsStream => _dogsController.stream;
   Sink<RefreshEvent> get refreshEventSink => _refreshEventController.sink;
+  Stream<double> get progressStream => _service.progressStream;
+  bool get isProgressStreamClosed => _service.isProgressStreamClosed;
   bool get isRefreshEventSinkClosed => _refreshEventController.isClosed;
   bool get isDogsStreamClosed => _dogsController.isClosed;
 
@@ -49,5 +50,7 @@ class DogBloc implements Bloc {
   void dispose() {
     _dogsController.close();
     _refreshEventController.close();
+    if (!isProgressStreamClosed)
+      _service.disposeProgress();
   }
 }
