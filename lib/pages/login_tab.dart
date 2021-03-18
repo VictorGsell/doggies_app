@@ -3,8 +3,6 @@ import 'package:doggies_app/BLoC/events/login_event.dart';
 import 'package:doggies_app/BLoC/login_bloc.dart';
 import 'package:flutter/material.dart';
 
-import 'home_page.dart';
-
 class LoginTab extends StatefulWidget {
   LoginTab({Key key, this.title}) : super(key: key);
 
