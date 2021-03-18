@@ -12,7 +12,7 @@ GetAllBreedsResponse _$GetAllBreedsResponseFromJson(Map<String, dynamic> json) {
       (k, e) => MapEntry(k, (e as List)?.map((e) => e as String)?.toList()),
     ),
     status: json['status'] as String,
-  );
+  )..code = json['code'] as int;
 }
 
 Map<String, dynamic> _$GetAllBreedsResponseToJson(
@@ -20,6 +20,7 @@ Map<String, dynamic> _$GetAllBreedsResponseToJson(
     <String, dynamic>{
       'message': instance.message,
       'status': instance.status,
+      'code': instance.code,
     };
 
 GetBreedInfoResponse _$GetBreedInfoResponseFromJson(Map<String, dynamic> json) {
@@ -28,7 +29,7 @@ GetBreedInfoResponse _$GetBreedInfoResponseFromJson(Map<String, dynamic> json) {
       (k, e) => MapEntry(k, e as String),
     ),
     status: json['status'] as String,
-  );
+  )..code = json['code'] as int;
 }
 
 Map<String, dynamic> _$GetBreedInfoResponseToJson(
@@ -36,6 +37,7 @@ Map<String, dynamic> _$GetBreedInfoResponseToJson(
     <String, dynamic>{
       'message': instance.message,
       'status': instance.status,
+      'code': instance.code,
     };
 
 GetBreedImageResponse _$GetBreedImageResponseFromJson(
@@ -43,7 +45,7 @@ GetBreedImageResponse _$GetBreedImageResponseFromJson(
   return GetBreedImageResponse(
     message: json['message'] as String,
     status: json['status'] as String,
-  );
+  )..code = json['code'] as int;
 }
 
 Map<String, dynamic> _$GetBreedImageResponseToJson(
@@ -51,6 +53,7 @@ Map<String, dynamic> _$GetBreedImageResponseToJson(
     <String, dynamic>{
       'message': instance.message,
       'status': instance.status,
+      'code': instance.code,
     };
 
 // **************************************************************************

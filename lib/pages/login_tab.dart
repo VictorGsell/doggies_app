@@ -1,3 +1,6 @@
+import 'package:doggies_app/BLoC/bloc_provider.dart';
+import 'package:doggies_app/BLoC/events/login_event.dart';
+import 'package:doggies_app/BLoC/login_bloc.dart';
 import 'package:flutter/material.dart';
 
 class LoginTab extends StatefulWidget {
@@ -10,10 +13,53 @@ class LoginTab extends StatefulWidget {
 }
 
 class _LoginTabState extends State<LoginTab> {
+  LoginBloc _bloc;
   final TextEditingController _emailController = TextEditingController()
-    ..text = "default_value";
+    ..text = "eve.holt@reqres.in";
   final TextEditingController _pswController = TextEditingController()
-    ..text = "default_value";
+    ..text = "cityslicka";
+  bool _showLoader = false;
+  bool _isDisabled = false;
+
+  @override
+  void initState() {
+    _bloc = BlocProvider.of<LoginBloc>(context);
+    _bloc.loginResultStream.listen(onSuccessLogin, onError: onErrorLogin);
+    super.initState();
+  }
+
+  void onSuccessLogin(String token) {
+    setState(() {
+      _showLoader = false;
+      _isDisabled = false;
+    });
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("Login successful ! token : $token"),
+      backgroundColor: Colors.green,
+    ));
+  }
+
+  void onErrorLogin(_) {
+    setState(() {
+      _showLoader = false;
+      _isDisabled = false;
+    });
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("An error occurred, login failed!"),
+      backgroundColor: Colors.red,
+    ));
+  }
+
+  void onLoginButtonPressed() {
+    if (!_bloc.isLoginEventSinkClosed) {
+      var event = LoginEvent(email: _emailController.value.text, password: _pswController.value.text);
+      _bloc.loginEventSink.add(event);
+      setState(() {
+        _showLoader = true;
+        _isDisabled = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +77,8 @@ class _LoginTabState extends State<LoginTab> {
                 controller: _emailController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    icon: Icon(Icons.mail_outline_rounded), labelText: "email"),
+                    icon: Icon(Icons.mail_outline_rounded),
+                    labelText: "email"),
               )),
         ),
         Center(
@@ -41,6 +88,7 @@ class _LoginTabState extends State<LoginTab> {
                 maxLines: 1,
                 maxLength: 50,
                 readOnly: true,
+                obscureText: true,
                 controller: _pswController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -50,12 +98,24 @@ class _LoginTabState extends State<LoginTab> {
               )),
         ),
         Center(
+          child: SizedBox(
+            width: 50,
+            height: 50,
+            child: _showLoader
+                ? CircularProgressIndicator()
+                : SizedBox(width: 0, height: 0),
+          ),
+        ),
+        Center(
             child: SizedBox(
-              child: ElevatedButton(onPressed: () {}, child: Text("Login", style: TextStyle(fontSize: 20),)),
-              width: 110,
-              height: 50,
-            )
-        )
+          child: ElevatedButton(
+              onPressed: _isDisabled ? null : onLoginButtonPressed,
+              child: Text(
+                "Login",
+              )),
+          width: 110,
+          height: 50,
+        ))
       ],
     );
   }
