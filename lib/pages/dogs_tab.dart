@@ -1,126 +1,10 @@
-import 'dart:async';
-
+import 'package:doggies_app/BLoC/bloc_provider.dart';
+import 'package:doggies_app/BLoC/dog_bloc.dart';
+import 'package:doggies_app/BLoC/events/refresh_event.dart';
 import 'package:doggies_app/models/dog_model.dart';
 import 'package:doggies_app/pages/dog_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-List<DogModel> dogs = [
-  DogModel(
-      breed: "Spaniel",
-      subBreed: "Sussex",
-      image: "https://images.dog.ceo/breeds/spaniel-sussex/n02102480_267.jpg",
-      description:
-          "A spaniel is a type of gun dog. Spaniels were especially bred to flush game out of denser brush. By the late 17th century spaniels had been specialized into water and land breeds."),
-  DogModel(
-      breed: "Spaniel",
-      subBreed: "Sussex",
-      image: "https://images.dog.ceo/breeds/spaniel-sussex/n02102480_267.jpg",
-      description:
-          "A spaniel is a type of gun dog. Spaniels were especially bred to flush game out of denser brush. By the late 17th century spaniels had been specialized into water and land breeds."),
-  DogModel(
-      breed: "Spaniel",
-      subBreed: "Sussex",
-      image: "https://images.dog.ceo/breeds/spaniel-sussex/n02102480_267.jpg",
-      description:
-          "A spaniel is a type of gun dog. Spaniels were especially bred to flush game out of denser brush. By the late 17th century spaniels had been specialized into water and land breeds."),
-  DogModel(
-      breed: "Spaniel",
-      subBreed: "Sussex",
-      image: "https://images.dog.ceo/breeds/spaniel-sussex/n02102480_267.jpg",
-      description:
-          "A spaniel is a type of gun dog. Spaniels were especially bred to flush game out of denser brush. By the late 17th century spaniels had been specialized into water and land breeds."),
-  DogModel(
-      breed: "Spaniel",
-      subBreed: "Sussex",
-      image: "https://images.dog.ceo/breeds/spaniel-sussex/n02102480_267.jpg",
-      description:
-          "A spaniel is a type of gun dog. Spaniels were especially bred to flush game out of denser brush. By the late 17th century spaniels had been specialized into water and land breeds."),
-  DogModel(
-      breed: "Spaniel",
-      subBreed: "Sussex",
-      image: "https://images.dog.ceo/breeds/spaniel-sussex/n02102480_267.jpg",
-      description:
-          "A spaniel is a type of gun dog. Spaniels were especially bred to flush game out of denser brush. By the late 17th century spaniels had been specialized into water and land breeds."),
-  DogModel(
-      breed: "Spaniel",
-      subBreed: "Sussex",
-      image: "https://images.dog.ceo/breeds/spaniel-sussex/n02102480_267.jpg",
-      description:
-          "A spaniel is a type of gun dog. Spaniels were especially bred to flush game out of denser brush. By the late 17th century spaniels had been specialized into water and land breeds."),
-  DogModel(
-      breed: "Spaniel",
-      subBreed: "Sussex",
-      image: "https://images.dog.ceo/breeds/spaniel-sussex/n02102480_267.jpg",
-      description:
-          "A spaniel is a type of gun dog. Spaniels were especially bred to flush game out of denser brush. By the late 17th century spaniels had been specialized into water and land breeds."),
-  DogModel(
-      breed: "Spaniel",
-      subBreed: "Sussex",
-      image: "https://images.dog.ceo/breeds/spaniel-sussex/n02102480_267.jpg",
-      description:
-          "A spaniel is a type of gun dog. Spaniels were especially bred to flush game out of denser brush. By the late 17th century spaniels had been specialized into water and land breeds."),
-  DogModel(
-      breed: "Spaniel",
-      subBreed: "Sussex",
-      image: "https://images.dog.ceo/breeds/spaniel-sussex/n02102480_267.jpg",
-      description:
-          "A spaniel is a type of gun dog. Spaniels were especially bred to flush game out of denser brush. By the late 17th century spaniels had been specialized into water and land breeds."),
-  DogModel(
-      breed: "Spaniel",
-      subBreed: "Sussex",
-      image: "https://images.dog.ceo/breeds/spaniel-sussex/n02102480_267.jpg",
-      description:
-          "A spaniel is a type of gun dog. Spaniels were especially bred to flush game out of denser brush. By the late 17th century spaniels had been specialized into water and land breeds."),
-  DogModel(
-      breed: "Spaniel",
-      subBreed: "Sussex",
-      image: "https://images.dog.ceo/breeds/spaniel-sussex/n02102480_267.jpg",
-      description:
-          "A spaniel is a type of gun dog. Spaniels were especially bred to flush game out of denser brush. By the late 17th century spaniels had been specialized into water and land breeds."),
-  DogModel(
-      breed: "Spaniel",
-      subBreed: "Sussex",
-      image: "https://images.dog.ceo/breeds/spaniel-sussex/n02102480_267.jpg",
-      description:
-          "A spaniel is a type of gun dog. Spaniels were especially bred to flush game out of denser brush. By the late 17th century spaniels had been specialized into water and land breeds."),
-  DogModel(
-      breed: "Spaniel",
-      subBreed: "Sussex",
-      image: "https://images.dog.ceo/breeds/spaniel-sussex/n02102480_267.jpg",
-      description:
-          "A spaniel is a type of gun dog. Spaniels were especially bred to flush game out of denser brush. By the late 17th century spaniels had been specialized into water and land breeds."),
-  DogModel(
-      breed: "Spaniel",
-      subBreed: "Sussex",
-      image: "https://images.dog.ceo/breeds/spaniel-sussex/n02102480_267.jpg",
-      description:
-          "A spaniel is a type of gun dog. Spaniels were especially bred to flush game out of denser brush. By the late 17th century spaniels had been specialized into water and land breeds."),
-  DogModel(
-      breed: "Spaniel",
-      subBreed: "Sussex",
-      image: "https://images.dog.ceo/breeds/spaniel-sussex/n02102480_267.jpg",
-      description:
-          "A spaniel is a type of gun dog. Spaniels were especially bred to flush game out of denser brush. By the late 17th century spaniels had been specialized into water and land breeds."),
-  DogModel(
-      breed: "Spaniel",
-      subBreed: "Sussex",
-      image: "https://images.dog.ceo/breeds/spaniel-sussex/n02102480_267.jpg",
-      description:
-          "A spaniel is a type of gun dog. Spaniels were especially bred to flush game out of denser brush. By the late 17th century spaniels had been specialized into water and land breeds."),
-  DogModel(
-      breed: "Spaniel",
-      subBreed: "Sussex",
-      image: "https://images.dog.ceo/breeds/spaniel-sussex/n02102480_267.jpg",
-      description:
-          "A spaniel is a type of gun dog. Spaniels were especially bred to flush game out of denser brush. By the late 17th century spaniels had been specialized into water and land breeds."),
-  DogModel(
-      breed: "Spaniel",
-      subBreed: "Sussex",
-      image: "https://images.dog.ceo/breeds/spaniel-sussex/n02102480_267.jpg",
-      description:
-          "A spaniel is a type of gun dog. Spaniels were especially bred to flush game out of denser brush. By the late 17th century spaniels had been specialized into water and land breeds."),
-];
 
 class DogsTab extends StatefulWidget {
   DogsTab({Key key, this.title}) : super(key: key);
@@ -134,17 +18,19 @@ class DogsTab extends StatefulWidget {
 }
 
 class DogsTabState extends State<DogsTab> {
-  StreamController<List<DogModel>> _controller;
+  DogBloc _bloc;
 
-  DogsTabState() {
-    _controller = StreamController<List<DogModel>>();
-    _controller.sink.add(dogs);
+  @override
+  void initState() {
+    _bloc =  BlocProvider.of<DogBloc>(context);
+    _bloc.refreshEventSink.add(RefreshEvent());
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: _controller.stream,
+        stream: _bloc.dogsStream,
         builder: (context, snapshot) {
           if (snapshot.hasError)
             return Center(child: Text("An error occurred."));
@@ -160,35 +46,39 @@ class DogsTabState extends State<DogsTab> {
                 height: 70,
             ));
           else
-            return ListView.separated(
-              itemCount: (snapshot.data as List<DogModel>).length,
-              separatorBuilder: (BuildContext context, int index) {
-                return Divider();
-              },
-              itemBuilder: (context, index) {
-                DogModel data = (snapshot.data as List<DogModel>)[index];
-                return ListTile(
-                  dense: false,
-                  title: Text('${data.breed}'),
-                  subtitle: Text('${data.subBreed}'),
-                  trailing: Image.network('${data.image}'),
-                  onTap: () => openDetailsModal(data),
-                );
-              },
+            return RefreshIndicator(
+              onRefresh: _bloc.fetchDogs,
+              child: ListView.separated(
+                itemCount: (snapshot.data as List<DogModel>).length,
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider();
+                },
+                itemBuilder: (context, index) {
+                  DogModel data = (snapshot.data as List<DogModel>)[index];
+                  FadeInImage image = FadeInImage(
+                    width: 75,
+                    height: 60,
+                    fit: BoxFit.fill,
+                    placeholder: AssetImage("assets/image_placeholder.jpg"),
+                    image: NetworkImage(data.image),
+                  );
+                  return ListTile(
+                    dense: false,
+                    title: Text('${data.breed}'),
+                    subtitle: Text('${data.subBreed}'),
+                    trailing: image,
+                    onTap: () => openDetailsModal(data: data, image: image),
+                  );
+                },
+              ),
             );
         });
   }
 
-  @override
-  void dispose() {
-    _controller.close();
-    super.dispose();
-  }
-
-  void openDetailsModal(DogModel data) {
+  void openDetailsModal({DogModel data, FadeInImage image}) {
     Dialog detailsModal = Dialog(
-      child: DogCard(data: data),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      child: DogCard(data: data, image: image),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
     );
     showGeneralDialog(
         context: context,
