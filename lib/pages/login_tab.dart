@@ -1,6 +1,3 @@
-import 'package:doggies_app/BLoC/bloc_provider.dart';
-import 'package:doggies_app/BLoC/events/login_event.dart';
-import 'package:doggies_app/BLoC/login_bloc.dart';
 import 'package:flutter/material.dart';
 
 class LoginTab extends StatefulWidget {
@@ -13,7 +10,6 @@ class LoginTab extends StatefulWidget {
 }
 
 class _LoginTabState extends State<LoginTab> {
-  LoginBloc _bloc;
   final TextEditingController _emailController = TextEditingController()
     ..text = "eve.holt@reqres.in";
   final TextEditingController _pswController = TextEditingController()
@@ -23,8 +19,6 @@ class _LoginTabState extends State<LoginTab> {
 
   @override
   void initState() {
-    _bloc = BlocProvider.of<LoginBloc>(context);
-    _bloc.loginResultStream.listen(onSuccessLogin, onError: onErrorLogin);
     super.initState();
   }
 
@@ -51,14 +45,10 @@ class _LoginTabState extends State<LoginTab> {
   }
 
   void onLoginButtonPressed() {
-    if (!_bloc.isLoginEventSinkClosed) {
-      var event = LoginEvent(email: _emailController.value.text, password: _pswController.value.text);
-      _bloc.loginEventSink.add(event);
       setState(() {
         _showLoader = true;
         _isDisabled = true;
       });
-    }
   }
 
   @override

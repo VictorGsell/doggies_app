@@ -1,6 +1,4 @@
-import 'package:doggies_app/BLoC/bloc_provider.dart';
-import 'package:doggies_app/BLoC/dog_bloc.dart';
-import 'package:doggies_app/BLoC/events/refresh_event.dart';
+import 'dart:async';
 import 'package:doggies_app/models/dog_model.dart';
 import 'package:doggies_app/pages/dog_card.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,21 +16,11 @@ class DogsTab extends StatefulWidget {
 }
 
 class DogsTabState extends State<DogsTab> {
-  DogBloc _bloc;
   double _progress;
   bool _showProgress = false;
 
   @override
   void initState() {
-    _bloc = BlocProvider.of<DogBloc>(context);
-    _bloc.refreshEventSink.add(RefreshEvent());
-    _bloc.progressStream.listen((progress) {
-      if (this.mounted) {
-        setState(() {
-          _progress = progress;
-        });
-      }
-    });
     super.initState();
   }
 
@@ -40,7 +28,7 @@ class DogsTabState extends State<DogsTab> {
   Widget build(BuildContext context) {
     var _context = context;
     return StreamBuilder(
-        stream: _bloc.dogsStream,
+        stream: StreamController<DogModel>().stream,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Center(
@@ -71,7 +59,6 @@ class DogsTabState extends State<DogsTab> {
               ),
             );
           } else if (!snapshot.hasData) {
-            _bloc.refreshEventSink.add(RefreshEvent());
             return Center(
                 child: SizedBox(
                   child: CircularProgressIndicator(
@@ -133,7 +120,7 @@ class DogsTabState extends State<DogsTab> {
         _showProgress = true;
       });
     }
-    await _bloc.fetchDogs();
+    // await _bloc.fetchDogs();
     if (this.mounted) {
       setState(() {
         _showProgress = false;
