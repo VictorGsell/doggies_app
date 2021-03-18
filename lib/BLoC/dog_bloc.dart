@@ -9,11 +9,6 @@ class DogBloc implements Bloc {
   StreamController<List<DogModel>> _dogsController = StreamController<List<DogModel>>.broadcast();
   StreamController<RefreshEvent> _refreshEventController = StreamController<RefreshEvent>();
 
-  DogBloc() {
-    _refreshEventController.stream.listen(refresh);
-    refresh(null);
-  }
-
   Stream<List<DogModel>> get dogsStream => _dogsController.stream;
   Sink<RefreshEvent> get refreshEventSink => _refreshEventController.sink;
   Stream<double> get progressStream => _service.progressStream;
@@ -21,19 +16,9 @@ class DogBloc implements Bloc {
   bool get isRefreshEventSinkClosed => _refreshEventController.isClosed;
   bool get isDogsStreamClosed => _dogsController.isClosed;
 
-  Future<void> fetchDogs() async {
-    try {
-      await _service.fetch();
-      refresh(null);
-    } catch (error) {
-      if (!_dogsController.isClosed)
-        _dogsController.sink.addError(error);
-    }
-  }
-
-  void refresh(_) {
-    if (_service.isLoaded && !_dogsController.isClosed)
-      _dogsController.sink.add(_service.dogs);
+  DogBloc() {
+    _refreshEventController.stream.listen(_refresh);
+    _refresh(null);
   }
 
   @override
@@ -42,10 +27,28 @@ class DogBloc implements Bloc {
       _dogsController = StreamController<List<DogModel>>.broadcast();
     if (isRefreshEventSinkClosed) {
       _refreshEventController = StreamController<RefreshEvent>();
-      _refreshEventController.stream.listen(refresh);
+      _refreshEventController.stream.listen(_refresh);
     }
     _service.initProgress();
   }
+
+  Future<void> fetchDogs() async {
+    try {
+      await _service.fetch();
+      _refresh(null);
+    } catch (error) {
+      if (!_dogsController.isClosed)
+        _dogsController.sink.addError(error);
+    }
+  }
+
+  void _refresh(_) {
+    if (!_dogsController.isClosed) {
+      _dogsController.sink.add(_service.dogs);
+    }
+  }
+
+
 
   @override
   void dispose() {

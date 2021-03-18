@@ -10,7 +10,6 @@ class DogService {
   final Dio _dio = Dio();
   StreamController<double> _progressController = StreamController<double>();
   DogApi _api;
-  bool isLoaded = false;
   double _progress = 0;
   List<DogModel> _data;
 
@@ -53,10 +52,8 @@ class DogService {
             newDogs.add(subBreedModel);
           }
       }
-      newDogs.length > 0 ? isLoaded = true : isLoaded = false;
       _data = newDogs;
     } catch (error) {
-      isLoaded = false;
       rethrow;
     }
   }

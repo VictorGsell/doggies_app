@@ -27,9 +27,11 @@ class DogsTabState extends State<DogsTab> {
     _bloc = BlocProvider.of<DogBloc>(context);
     _bloc.refreshEventSink.add(RefreshEvent());
     _bloc.progressStream.listen((progress) {
-      setState(() {
-        _progress = progress;
-      });
+      if (this.mounted) {
+        setState(() {
+          _progress = progress;
+        });
+      }
     });
     super.initState();
   }
@@ -68,16 +70,18 @@ class DogsTabState extends State<DogsTab> {
                 ],
               ),
             );
-          } else if (!snapshot.hasData)
+          } else if (!snapshot.hasData) {
+            _bloc.refreshEventSink.add(RefreshEvent());
             return Center(
                 child: SizedBox(
-              child: CircularProgressIndicator(
-                value: _progress,
-                strokeWidth: 5,
-              ),
-              width: 70,
-              height: 70,
-            ));
+                  child: CircularProgressIndicator(
+                    value: _progress,
+                    strokeWidth: 5,
+                  ),
+                  width: 70,
+                  height: 70,
+                ));
+          }
           else
             return Stack(
               alignment: Alignment.topCenter,
@@ -123,14 +127,18 @@ class DogsTabState extends State<DogsTab> {
   }
 
   Future<void> _refetch() async {
-    setState(() {
-      _progress = 0;
-      _showProgress = true;
-    });
+    if (this.mounted) {
+      setState(() {
+        _progress = 0;
+        _showProgress = true;
+      });
+    }
     await _bloc.fetchDogs();
-    setState(() {
-      _showProgress = false;
-    });
+    if (this.mounted) {
+      setState(() {
+        _showProgress = false;
+      });
+    }
   }
 
   void openDetailsModal({DogModel data, FadeInImage image}) {
