@@ -8,7 +8,7 @@ import 'package:dio/dio.dart';
 class DogService {
   static final DogService _instance = DogService._internal();
   final Dio _dio = Dio();
-  StreamController<double> _progressController = StreamController<double>();
+  StreamController<double> _progressController = StreamController<double>.broadcast();
   DogApi _api;
   double _progress = 0;
   List<DogModel> _data;
@@ -28,7 +28,7 @@ class DogService {
 
   void initProgress() {
     if (_progressController.isClosed)
-      _progressController = StreamController<double>();
+      _progressController = StreamController<double>.broadcast();
   }
 
   void disposeProgress() {
