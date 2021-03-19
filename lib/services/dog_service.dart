@@ -11,7 +11,7 @@ class DogService {
   StreamController<double> _progressController = StreamController<double>();
   DogApi _api;
   double _progress = 0;
-  List<DogModel> _data;
+  List<DogModel> _data = [];
 
   List<DogModel> get dogs => List<DogModel>.from(_data);
   Stream<double> get progressStream => _progressController.stream;
